@@ -199,7 +199,7 @@ function PhotoCarousel({ photos }: { photos: Photo[] }) {
   if (photos.length === 0) return null
 
   return (
-    <div style={{ width: "100%", height: "100%", borderRadius: "8px", overflow: "hidden", position: "relative" }}>
+    <div style={{ flex: 1, borderRadius: "8px", overflow: "hidden", position: "relative", minHeight: 0 }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={photos[idx].url}
@@ -208,6 +208,7 @@ function PhotoCarousel({ photos }: { photos: Photo[] }) {
           width: "100%", height: "100%", objectFit: "cover",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.6s ease",
+          position: "absolute", inset: 0,
         }}
       />
     </div>
@@ -270,7 +271,7 @@ export default function LunchScreen({ entree, plat, dessert, vins, showDice = tr
 
           {!showDice && photos.length > 0 && <>
             <div style={{ width: "1px", background: CHALK_LINE, alignSelf: "stretch" }} />
-            <div style={{ width: "35%", paddingBottom: "0.4vh" }}>
+            <div style={{ width: "35%", paddingBottom: "0.4vh", display: "flex", flexDirection: "column" }}>
               <PhotoCarousel photos={photos} />
             </div>
           </>}
