@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Almond Butter';
+  src: url('/fonts/AlmondButter.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-jukely-nuit:     #0F2748;
+  --color-jukely-ardoise:  #1E4976;
+  --color-jukely-craie:    #FDFBF5;
+  --color-jukely-moutarde: #F4C542;
+  --color-jukely-brique:   #E56A4E;
+  --color-jukely-brume:    #94A5BC;
+
+  --font-display: var(--font-space-grotesk, 'Space Grotesk', system-ui, sans-serif);
+  --font-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
+  --font-chalk: var(--font-caveat, 'Caveat', cursive);
+  --font-almond: 'Almond Butter', cursive;
+}
+
+html {
+  color-scheme: light;
+  font-family: var(--font-sans);
+}
+
+body {
+  background: #FDFBF5;
+  color: #0F2748;
+  font-family: var(--font-sans);
+}
+
+
+.font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans) !important;
+}

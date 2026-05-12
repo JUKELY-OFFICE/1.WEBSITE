@@ -1,0 +1,153 @@
+{
+  "nav": {
+    "modules": "Modules",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Your time is too precious to waste on thankless tasks.",
+    "sub": "Custom automation for independent restaurants.",
+    "cta_primary": "Explore modules",
+    "cta_secondary": "Book a call"
+  },
+  "pain": {
+    "title": "The problem",
+    "item1_title": "You're burning out on tasks that have nothing to do with cooking.",
+    "item1_desc": "Staff management, menu updates, accounting, review replies, reservations, supplier orders.",
+    "item2_title": "Technology can eliminate them — but no one has done it simply and affordably.",
+    "item2_desc": "Existing software is either too generic, too expensive, or too complex to adopt.",
+    "item3_title": "Jukely fills that gap.",
+    "item3_desc": "Precise tools, built for your operation, deployed in days."
+  },
+  "solution": {
+    "title": "Jukely automates your thankless tasks.",
+    "item1_title": "Custom-built",
+    "item1_desc": "Not generic software — yours. Built for your team, not an average. Delivered in days, not months.",
+    "item2_title": "Accessible pricing",
+    "item2_desc": "We charge for what we do. Not what the market tolerates. You know exactly what you pay and why.",
+    "item3_title": "Immediate results",
+    "item3_desc": "Done. It's automatic. You get back every minute you used to spend on it. Back to the heart of your craft."
+  },
+  "process": {
+    "title": "How it works",
+    "step1_num": "01",
+    "step1_title": "We identify",
+    "step1_desc": "First conversation to identify your main time sinks and how we can help optimise your operation.",
+    "step2_num": "02",
+    "step2_title": "We build",
+    "step2_desc": "We develop a custom tool for your restaurant, not generic software. You review at every step.",
+    "step3_num": "03",
+    "step3_title": "We install",
+    "step3_desc": "We come to you, install everything, train your team in one hour. That's it."
+  },
+  "testimonial": {
+    "quote": "I used to spend 5 hours a week manually entering my team's hours. Today, zero. I don't know why I didn't do this sooner.",
+    "author": "Owner of a Parisian restaurant, Jukely client"
+  },
+  "bricks_preview": {
+    "title": "Solutions already delivered",
+    "cta": "View all modules"
+  },
+  "pricing_summary": {
+    "title": "A simple model",
+    "setup_label": "One-time",
+    "setup_desc": "From €750",
+    "monthly_label": "Subscription",
+    "monthly_desc": "From €29 / month",
+    "custom_label": "Custom",
+    "custom_desc": "Out-of-catalogue needs, quoted",
+    "cta": "View pricing"
+  },
+  "about_teaser": {
+    "title": "A Parisian studio",
+    "desc": "Jukely is a Parisian tech studio building operational tools for independent restaurants. We don't do generic SaaS — we solve precise problems.",
+    "cta": "Learn more"
+  },
+  "final_cta": {
+    "title": "Ready to get your time back?",
+    "desc": "We start by identifying your thankless tasks. A 30-minute conversation, no commitment.",
+    "cta": "Book a call"
+  },
+  "modules_page": {
+    "title": "Our modules",
+    "subtitle": "Operational bricks that activate on demand.",
+    "active": "Live",
+    "in_dev": "In development",
+    "soon": "Coming soon",
+    "cta": "Contact us"
+  },
+  "pricing_page": {
+    "title": "Pricing",
+    "subtitle": "We charge for what we do. Not what the market tolerates.",
+    "setup_title": "One-time",
+    "setup_price": "From €750",
+    "setup_type": "Single payment",
+    "setup_includes": "Audit · Custom development · Review · Installation · 1h training",
+    "monthly_title": "Subscription",
+    "monthly_price": "From €29 / month",
+    "monthly_type": "No long-term commitment",
+    "monthly_includes": "Secure hosting & data · Updates · Reactive support · Minor changes included",
+    "custom_title": "Custom",
+    "custom_price": "Quoted",
+    "custom_type": "Fixed price",
+    "custom_includes": "Specific out-of-catalogue development, delivered and documented",
+    "faq_title": "FAQ",
+    "faq1_q": "It's too expensive.",
+    "faq1_a": "Compared to what? How much do you lose in admin hours each month? Our clients typically recover their investment within 90 days.",
+    "faq2_q": "I don't have time to change my tools.",
+    "faq2_a": "We don't change anything. We plug into what you already have. Installation takes 2 hours.",
+    "faq3_q": "You're too small — what if you shut down?",
+    "faq3_a": "All contracts include a data export clause in standard format. And you hold the power: monthly subscription, cancellable anytime.",
+    "faq4_q": "I want to wait and see.",
+    "faq4_a": "Perfect. We offer a 30-minute call to identify your time sinks, no commitment. Judge for yourself."
+  },
+  "about_page": {
+    "title": "About",
+    "mission_title": "Our mission",
+    "mission_desc": "Jukely automates thankless tasks for independent restaurant owners. Not generic SaaS — a studio that solves real field problems, brick by brick.",
+    "team_title": "The team",
+    "member1_name": "Jean Gautier-Sauvagnac",
+    "member1_role": "Co-founder",
+    "member2_name": "Corentin Desjars de Keranroue",
+    "member2_role": "Co-founder",
+    "diff_title": "What sets us apart",
+    "diff1": "Custom-built: for your operation, not an average",
+    "diff2": "Accessible pricing: we charge for what we do",
+    "diff3": "Immediate results: delivered in days, not months",
+    "diff4": "French, reachable, responsive"
+  },
+  "contact_page": {
+    "title": "Contact",
+    "subtitle": "A 30-minute call to identify your time sinks. No commitment.",
+    "name_label": "Name",
+    "email_label": "Email",
+    "restaurant_label": "Restaurant name",
+    "message_label": "Message",
+    "submit": "Send",
+    "email": "jgs@jukely.fr",
+    "phone": "+33 6 64 59 29 34",
+    "success": "Message sent! We'll get back to you within 24h.",
+    "error": "Something went wrong. Try again or email us directly."
+  },
+  "footer": {
+    "legal": "Legal notice",
+    "tagline": "Custom automation for independent restaurants."
+  },
+  "bricks": {
+    "menuBoardTV": "Menu display",
+    "menuBoardTVDesc": "Your menu displays on your TVs and updates remotely. No more last-minute printed signs. QR code display for Google reviews and reservation links.",
+    "menuBoardTVMetric": "~2h/week saved",
+    "pointageNFC": "NFC time tracker",
+    "pointageNFCDesc": "NFC badge to record staff hours, automatic transfer to an Excel file. End of manual entry.",
+    "pointageNFCMetric": "~5h/week saved · 0 entry errors",
+    "kds": "Kitchen Display System (KDS)",
+    "kdsDesc": "Kitchen screens with real-time orders, prioritisation, and timing.",
+    "borneCommande": "Self-order kiosk",
+    "borneCommandeDesc": "Customer-facing order and payment kiosk.",
+    "foodCost": "Food cost management",
+    "foodCostDesc": "Per-dish margin tracking, alert when a supplier price kills profitability.",
+    "dashboardManager": "Manager dashboard",
+    "dashboardManagerDesc": "Back-office TV screen with real-time revenue, vs. target, live covers."
+  }
+}

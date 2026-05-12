@@ -1,0 +1,153 @@
+{
+  "nav": {
+    "modules": "Modules",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Votre temps est trop précieux pour être gaspillé sur des tâches ingrates.",
+    "sub": "Automatisation sur mesure pour la restauration.",
+    "cta_primary": "Découvrir les modules",
+    "cta_secondary": "Prendre rendez-vous"
+  },
+  "pain": {
+    "title": "Le problème",
+    "item1_title": "Vous vous épuisez sur des tâches qui n'ont rien à voir avec la cuisine.",
+    "item1_desc": "Gestion du personnel, mise à jour des menus, suivi comptable, avis clients, réservations, commandes fournisseurs.",
+    "item2_title": "La technologie peut les supprimer, mais personne ne l'a fait simplement et à prix accessible.",
+    "item2_desc": "Les logiciels existants sont soit trop génériques, soit trop chers, soit trop complexes à adopter.",
+    "item3_title": "Jukely comble ce vide.",
+    "item3_desc": "Des outils précis, pensés pour votre opération, installés en quelques jours."
+  },
+  "solution": {
+    "title": "Jukely automatise vos tâches ingrates.",
+    "item1_title": "Sur mesure",
+    "item1_desc": "Pas un logiciel générique, le vôtre. Pensé pour vos équipes, pas pour une moyenne. Livré en quelques jours, pas en quelques mois.",
+    "item2_title": "Prix accessible",
+    "item2_desc": "On facture ce qu'on fait. Pas ce que le marché tolère. Vous savez exactement ce que vous payez et pourquoi.",
+    "item3_title": "Résultat immédiat",
+    "item3_desc": "Fini de s'en occuper. C'est automatique. Vous récupérez chaque minute que vous y consacriez. Retour au cœur de votre métier."
+  },
+  "process": {
+    "title": "Comment ça marche",
+    "step1_num": "01",
+    "step1_title": "On identifie",
+    "step1_desc": "Premier entretien pour identifier vos pertes de temps principales et comment nous pouvons optimiser votre opération.",
+    "step2_num": "02",
+    "step2_title": "On construit",
+    "step2_desc": "On développe un outil sur mesure pour votre restaurant, pas un logiciel générique. Revue avec vous à chaque étape.",
+    "step3_num": "03",
+    "step3_title": "On installe",
+    "step3_desc": "On vient chez vous, on installe, on vous forme en une heure. C'est tout."
+  },
+  "testimonial": {
+    "quote": "Avant je passais 5h par semaine à saisir les heures de mon équipe à la main. Aujourd'hui, zéro. Je ne sais pas pourquoi je n'ai pas fait ça plus tôt.",
+    "author": "Patronne d'un restaurant parisien, cliente Jukely"
+  },
+  "bricks_preview": {
+    "title": "Solutions déjà réalisées",
+    "cta": "Voir tous les modules"
+  },
+  "pricing_summary": {
+    "title": "Un modèle simple",
+    "setup_label": "One-shot",
+    "setup_desc": "À partir de 750 €",
+    "monthly_label": "Abonnement",
+    "monthly_desc": "À partir de 29 € / mois",
+    "custom_label": "Sur-mesure",
+    "custom_desc": "Besoin hors catalogue, sur devis",
+    "cta": "Voir les tarifs"
+  },
+  "about_teaser": {
+    "title": "Un studio parisien",
+    "desc": "Jukely est un studio tech parisien qui construit des outils opérationnels pour la restauration indépendante. Nous ne faisons pas du SaaS généraliste — nous réglons des problèmes précis.",
+    "cta": "En savoir plus"
+  },
+  "final_cta": {
+    "title": "Prêt à récupérer du temps ?",
+    "desc": "On commence par identifier vos tâches ingrates. Un échange de 30 minutes, sans engagement.",
+    "cta": "Prendre rendez-vous"
+  },
+  "modules_page": {
+    "title": "Nos modules",
+    "subtitle": "Des briques opérationnelles qui s'activent à la demande.",
+    "active": "Actif",
+    "in_dev": "En développement",
+    "soon": "Bientôt",
+    "cta": "Nous contacter"
+  },
+  "pricing_page": {
+    "title": "Tarifs",
+    "subtitle": "On facture ce qu'on fait. Pas ce que le marché tolère.",
+    "setup_title": "One-shot",
+    "setup_price": "À partir de 750 €",
+    "setup_type": "Paiement unique",
+    "setup_includes": "Audit · Développement sur mesure · Revue · Installation · Formation en 1h",
+    "monthly_title": "Abonnement",
+    "monthly_price": "À partir de 29 € / mois",
+    "monthly_type": "Sans engagement long terme",
+    "monthly_includes": "Hébergement & données sécurisées · Mises à jour · Support réactif · Modifications mineures incluses",
+    "custom_title": "Sur-mesure",
+    "custom_price": "Sur devis",
+    "custom_type": "Forfait",
+    "custom_includes": "Besoin spécifique hors catalogue, développé et documenté",
+    "faq_title": "Questions fréquentes",
+    "faq1_q": "C'est trop cher.",
+    "faq1_a": "Comparé à quoi ? Combien perdez-vous en heures admin chaque mois ? Nos clients récupèrent généralement leur investissement en moins de 90 jours.",
+    "faq2_q": "Je n'ai pas le temps de changer mes outils.",
+    "faq2_a": "On ne change rien. On se branche sur ce que vous avez déjà. L'installation prend 2 heures.",
+    "faq3_q": "Vous êtes trop petits, si vous fermez je suis coincé.",
+    "faq3_a": "Tous nos contrats prévoient une clause de récupération de données en format standard. Et c'est vous qui avez le pouvoir : abonnement mensuel, résiliable à tout moment.",
+    "faq4_q": "J'attends de voir.",
+    "faq4_a": "Parfait. On propose un premier échange de 30 minutes sans engagement pour identifier vos tâches ingrates. Vous jugez sur pièce."
+  },
+  "about_page": {
+    "title": "À propos",
+    "mission_title": "Notre mission",
+    "mission_desc": "Jukely automatise les tâches ingrates des restaurateurs indépendants. Pas un SaaS généraliste — un studio qui règle de vrais problèmes terrain, brique par brique.",
+    "team_title": "L'équipe",
+    "member1_name": "Jean Gautier-Sauvagnac",
+    "member1_role": "Co-fondateur",
+    "member2_name": "Corentin Desjars de Keranroue",
+    "member2_role": "Co-fondateur",
+    "diff_title": "Ce qui nous différencie",
+    "diff1": "Sur mesure : pensé pour votre opération, pas pour une moyenne",
+    "diff2": "Prix accessible : on facture ce qu'on fait",
+    "diff3": "Résultat immédiat : livré en quelques jours, pas en quelques mois",
+    "diff4": "Français, joignables, réactifs"
+  },
+  "contact_page": {
+    "title": "Contact",
+    "subtitle": "Un échange de 30 minutes pour identifier vos tâches ingrates. Sans engagement.",
+    "name_label": "Nom",
+    "email_label": "Email",
+    "restaurant_label": "Nom du restaurant",
+    "message_label": "Message",
+    "submit": "Envoyer",
+    "email": "jgs@jukely.fr",
+    "phone": "+33 6 64 59 29 34",
+    "success": "Message envoyé ! On vous répond sous 24h.",
+    "error": "Une erreur est survenue. Réessayez ou écrivez-nous directement."
+  },
+  "footer": {
+    "legal": "Mentions légales",
+    "tagline": "Automatisation sur mesure pour la restauration."
+  },
+  "bricks": {
+    "menuBoardTV": "Affichage menu",
+    "menuBoardTVDesc": "Votre carte s'affiche sur vos télés et se met à jour à distance. Plus jamais d'affiche imprimée à la dernière minute. Affichage QR code Google review et liens de réservation.",
+    "menuBoardTVMetric": "~2h/semaine gagnées",
+    "pointageNFC": "Pointeuse NFC",
+    "pointageNFCDesc": "Badge NFC pour enregistrer les heures du staff, transfert automatique dans un fichier Excel. Fin de la saisie manuelle.",
+    "pointageNFCMetric": "~5h/semaine gagnées · 0 erreur de saisie",
+    "kds": "Affichage Cuisine (KDS)",
+    "kdsDesc": "Écrans cuisine avec commandes en temps réel, priorisation, timing.",
+    "borneCommande": "Borne de commande self-service",
+    "borneCommandeDesc": "Commande et paiement par le client depuis une borne tactile.",
+    "foodCost": "Pilotage food cost",
+    "foodCostDesc": "Suivi des marges par plat, alerte quand un prix fournisseur explose la rentabilité.",
+    "dashboardManager": "Dashboard manager",
+    "dashboardManagerDesc": "Écran TV en back-office avec CA temps réel, comparaison vs prévu, couverts en cours."
+  }
+}
