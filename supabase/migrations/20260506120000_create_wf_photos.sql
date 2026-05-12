@@ -21,17 +21,17 @@ create policy "auth_delete"  on wf_photos for delete to authenticated  using (tr
 
 -- Bucket Storage pour les photos TV
 insert into storage.buckets (id, name, public)
-values ('wf-photos', 'wf-photos', true)
+values ('photos', 'photos', true)
 on conflict (id) do nothing;
 
 create policy "public_read" on storage.objects
   for select to anon, authenticated
-  using (bucket_id = 'wf-photos');
+  using (bucket_id = 'photos');
 
 create policy "auth_upload" on storage.objects
   for insert to authenticated
-  with check (bucket_id = 'wf-photos');
+  with check (bucket_id = 'photos');
 
 create policy "auth_delete_storage" on storage.objects
   for delete to authenticated
-  using (bucket_id = 'wf-photos');
+  using (bucket_id = 'photos');
