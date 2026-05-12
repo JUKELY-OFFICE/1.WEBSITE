@@ -235,9 +235,12 @@ export default function WebFrontDashboard() {
     if (!file || !venueId) return;
     setPhotoUploading(true);
     setStatus(null);
-    const ext = file.name.split('.').pop();
-    const path = `${venueId}/${wizardPage}/${Date.now()}.${ext}`;
-    const { error: uploadError } = await supabase.storage.from('photos').upload(path, file);
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const path = `${wizardPage}_${Date.now()}.${ext}`;
+    const { error: uploadError } = await supabase.storage.from('photos').upload(path, file, {
+      contentType: file.type || 'image/jpeg',
+      upsert: false,
+    });
     if (uploadError) { setStatus({ ok: false, text: `Erreur upload : ${uploadError.message}` }); setPhotoUploading(false); return; }
     const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path);
     const { error: insertError } = await supabase.from('wf_photos').insert({
