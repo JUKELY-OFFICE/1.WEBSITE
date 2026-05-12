@@ -33,6 +33,7 @@ export interface MenuData {
   aperoSpiritueux:    DisplayItem[]
   aperoMessageBas:    DisplayItem | null
   lwPhotos:           Photo[]
+  aperoPhotos:        Photo[]
   loading:            boolean
 }
 
@@ -46,6 +47,7 @@ const EMPTY: MenuData = {
   hhCocktails: [], hhBieres: [], hhVins: [], hhTapasSignature: [], hhSpiritueux: [], hhMessageBas: null,
   aperoCocktails: [], aperoBieres: [], aperoVins: [], aperoTapasSignature: [], aperoSpiritueux: [], aperoMessageBas: null,
   lwPhotos: [],
+  aperoPhotos: [],
   loading: true,
 }
 
@@ -97,6 +99,9 @@ export function useMenuData(): MenuData {
       aperoSpiritueux:    by("apero", "spiritueux"),
       aperoMessageBas:    by("apero", "message_bas")[0] ?? null,
       lwPhotos: (photoRows ?? []).filter((r: any) => r.page === "lunch_weekend").map((r: any) => ({
+        id: r.id, url: r.url, sortOrder: r.sort_order,
+      })),
+      aperoPhotos: (photoRows ?? []).filter((r: any) => r.page === "apero").map((r: any) => ({
         id: r.id, url: r.url, sortOrder: r.sort_order,
       })),
       loading:           false,

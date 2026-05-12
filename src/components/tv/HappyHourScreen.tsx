@@ -2,8 +2,10 @@
 //  ÉCRAN HAPPY HOUR — 3 colonnes : menu | photos | coups de cœur
 // ============================================================
 
+import { useState, useEffect } from "react"
 import MenuFrame from "./MenuFrame"
 import type { DisplayItem } from "@/types/tv"
+import type { Photo } from "@/lib/tv/useMenuData"
 
 interface Props {
   cocktails:       DisplayItem[]
@@ -14,6 +16,33 @@ interface Props {
   messageBas:      DisplayItem | null
   titre?:          string
   wineOnly?:       boolean
+  photos?:         Photo[]
+}
+
+function PhotoCarousel({ photos }: { photos: Photo[] }) {
+  const [idx, setIdx] = useState(0)
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    if (photos.length <= 1) return
+    const timer = setInterval(() => {
+      setVisible(false)
+      setTimeout(() => { setIdx(i => (i + 1) % photos.length); setVisible(true) }, 600)
+    }, 60_000)
+    return () => clearInterval(timer)
+  }, [photos.length])
+
+  if (photos.length === 0) return null
+
+  return (
+    <div style={{ flex: 1, borderRadius: "8px", overflow: "hidden", position: "relative", minHeight: 0 }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={photos[idx].url} alt=""
+        style={{ width: "100%", height: "100%", objectFit: "cover",
+          opacity: visible ? 1 : 0, transition: "opacity 0.6s ease",
+          position: "absolute", inset: 0 }} />
+    </div>
+  )
 }
 
 const CHALK      = "#F2EDE4"
@@ -121,7 +150,7 @@ function SideBox({ title, subtitle, items }: { title: string; subtitle?: string;
 }
 
 // ── Écran principal ───────────────────────────────────────────
-export default function HappyHourScreen({ cocktails, bieres, vins, tapasSignature, spiritueux, messageBas, titre = "Happy Hour", wineOnly = false }: Props) {
+export default function HappyHourScreen({ cocktails, bieres, vins, tapasSignature, spiritueux, messageBas, titre = "Happy Hour", wineOnly = false, photos = [] }: Props) {
   const totalItems = cocktails.length + bieres.length + vins.length
   const nameSz  = totalItems <= 10 ? 1.65 : totalItems <= 14 ? 1.4  : 1.15
   const priceSz = totalItems <= 10 ? 1.7  : totalItems <= 14 ? 1.45 : 1.2
@@ -130,36 +159,36 @@ export default function HappyHourScreen({ cocktails, bieres, vins, tapasSignatur
   if (wineOnly) {
     return (
       <MenuFrame theme="slate" showLogo={false}>
-        <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden", gap: "1.5vh" }}>
+        <div style={{ display: "flex", gap: "3vw", height: "100%", overflow: "hidden" }}>
 
-          {/* Titre */}
-          <div>
-            <h1 style={{
-              fontFamily: CURSIVE, fontSize: "3.8vw", color: CHALK,
-              lineHeight: 1.2, margin: 0, letterSpacing: "-0.04em",
-            }}>
-              Apéro
-            </h1>
-            <p style={{
-              fontFamily: FONT, fontSize: "1.2vw", letterSpacing: "0.2em",
-              color: CHALK, opacity: 0.45, margin: 0,
-            }}>
-              — de 16h à 23h —
-            </p>
+          {/* Colonne gauche : vins + spiritueux */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1.5vh" }}>
+            <div>
+              <h1 style={{ fontFamily: CURSIVE, fontSize: "3.8vw", color: CHALK, lineHeight: 1.2, margin: 0, letterSpacing: "-0.04em" }}>
+                Apéro
+              </h1>
+              <p style={{ fontFamily: FONT, fontSize: "1.2vw", letterSpacing: "0.2em", color: CHALK, opacity: 0.45, margin: 0 }}>
+                — de 16h à 23h —
+              </p>
+            </div>
+            <SideBox title="Nos vins du moment" items={tapasSignature} />
+            <SideBox title="Spiritueux" subtitle="6 cl" items={spiritueux} />
+            {messageBas && (
+              <p style={{ fontFamily: FONT, fontSize: "1.1vw", fontWeight: 600,
+                letterSpacing: "0.18em", color: CHALK_DIM, textTransform: "uppercase", textAlign: "center" }}>
+                {messageBas.name}
+              </p>
+            )}
           </div>
 
-          <SideBox title="Nos vins du moment" items={tapasSignature} />
-          <SideBox title="Spiritueux" subtitle="6 cl" items={spiritueux} />
+          {/* Colonne droite : carousel photos */}
+          {photos.length > 0 && <>
+            <div style={{ width: "1px", background: "rgba(242,237,228,0.22)", alignSelf: "stretch" }} />
+            <div style={{ width: "40%", display: "flex", flexDirection: "column" }}>
+              <PhotoCarousel photos={photos} />
+            </div>
+          </>}
 
-          {messageBas && (
-            <p style={{
-              fontFamily: FONT, fontSize: "1.1vw", fontWeight: 600,
-              letterSpacing: "0.18em", color: CHALK_DIM, textTransform: "uppercase",
-              textAlign: "center",
-            }}>
-              {messageBas.name}
-            </p>
-          )}
         </div>
       </MenuFrame>
     )

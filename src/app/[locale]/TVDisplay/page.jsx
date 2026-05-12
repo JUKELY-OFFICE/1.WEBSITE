@@ -56,7 +56,7 @@ export default function TVDisplay() {
       case "lunch":         return <LunchScreen entree={menu.lunchEntree} plat={menu.lunchPlat} dessert={menu.lunchDessert} vins={menu.lunchVins} />
       case "lunch_weekend": return <LunchScreen entree={menu.lwEntree} plat={menu.lwPlat} dessert={menu.lwDessert} vins={menu.lwVins} showDice={false} photos={menu.lwPhotos} />
       case "happy_hour": return <HappyHourScreen cocktails={menu.hhCocktails} bieres={menu.hhBieres} vins={menu.hhVins} tapasSignature={menu.hhTapasSignature} spiritueux={menu.hhSpiritueux} messageBas={menu.hhMessageBas} />
-      case "apero":      return <HappyHourScreen cocktails={menu.aperoCocktails} bieres={menu.aperoBieres} vins={menu.aperoVins} tapasSignature={menu.aperoTapasSignature} spiritueux={menu.aperoSpiritueux} messageBas={menu.aperoMessageBas} titre="Apéro" wineOnly />
+      case "apero":      return <HappyHourScreen cocktails={menu.aperoCocktails} bieres={menu.aperoBieres} vins={menu.aperoVins} tapasSignature={menu.aperoTapasSignature} spiritueux={menu.aperoSpiritueux} messageBas={menu.aperoMessageBas} titre="Apéro" wineOnly photos={menu.aperoPhotos} />
       case "closed":
       default:           return <ClosedScreen />
     }

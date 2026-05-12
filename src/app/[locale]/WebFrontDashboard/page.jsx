@@ -534,7 +534,7 @@ export default function WebFrontDashboard() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <p style={{ color: BRUME, fontSize: '0.72rem', fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Action ?</p>
               {ACTIONS.filter(a => {
-                if (a.id === 'photos') return wizardPage === 'lunch_weekend';
+                if (a.id === 'photos') return wizardPage === 'lunch_weekend' || wizardPage === 'apero';
                 if (wizardPage === 'lunch') return a.id === 'modifier' || a.id === 'ajouter' || a.id === 'supprimer';
                 return a.id !== 'photos';
               }).map(a => (
