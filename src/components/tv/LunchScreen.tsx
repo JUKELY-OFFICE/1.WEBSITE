@@ -192,7 +192,7 @@ function PhotoCarousel({ photos }: { photos: Photo[] }) {
         setIdx(i => (i + 1) % photos.length)
         setVisible(true)
       }, 600)
-    }, 5000)
+    }, 60_000)
     return () => clearInterval(timer)
   }, [photos.length])
 
