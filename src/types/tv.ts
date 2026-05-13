@@ -1,4 +1,4 @@
-export type ScreenMode = "breakfast" | "lunch" | "happy_hour" | "apero" | "closed"
+export type ScreenMode = "breakfast" | "lunch" | "lunch_weekend" | "happy_hour" | "apero" | "closed"
 
 export interface DisplayItem {
   id:          string
