@@ -11,6 +11,7 @@ import BreakfastScreenChalk from "@/components/tv/BreakfastScreenChalk"
 import LunchScreen from "@/components/tv/LunchScreen"
 import LunchPhotoScreen from "@/components/tv/LunchPhotoScreen"
 import HappyHourScreen from "@/components/tv/HappyHourScreen"
+import HappyHourPhotoScreen from "@/components/tv/HappyHourPhotoScreen"
 
 const VALID_MODES = ["breakfast", "lunch", "lunch_weekend", "happy_hour", "apero", "closed"]
 
@@ -19,6 +20,7 @@ export default function TVDisplay() {
   const scheduled = useScheduler()
   const menu = useMenuData()
   const [showLunchPhotos, setShowLunchPhotos] = useState(false)
+  const [showHappyHourPhotos, setShowHappyHourPhotos] = useState(false)
 
   const previewParam = searchParams.get("preview")
   const mode = (previewParam && VALID_MODES.includes(previewParam))
@@ -43,6 +45,25 @@ export default function TVDisplay() {
     startCycle()
     return () => clearTimeout(timeout)
   }, [mode, menu.lunchPhotos.length])
+
+  useEffect(() => {
+    if (mode !== 'happy_hour' || menu.happyHourPhotos.length === 0) {
+      setShowHappyHourPhotos(false)
+      return
+    }
+    const MENU_MS   = 5 * 60 * 1000
+    const PHOTOS_MS = 2 * 60 * 1000
+    let timeout
+    const startCycle = () => {
+      setShowHappyHourPhotos(false)
+      timeout = setTimeout(() => {
+        setShowHappyHourPhotos(true)
+        timeout = setTimeout(startCycle, PHOTOS_MS)
+      }, MENU_MS)
+    }
+    startCycle()
+    return () => clearTimeout(timeout)
+  }, [mode, menu.happyHourPhotos.length])
 
   useEffect(() => {
     const style = document.createElement("style")
@@ -80,7 +101,10 @@ export default function TVDisplay() {
           ? <LunchPhotoScreen photos={menu.lunchPhotos} />
           : <LunchScreen entree={menu.lunchEntree} plat={menu.lunchPlat} dessert={menu.lunchDessert} vins={menu.lunchVins} />
       case "lunch_weekend": return <LunchScreen entree={menu.lwEntree} plat={menu.lwPlat} dessert={menu.lwDessert} vins={menu.lwVins} showDice={false} photos={menu.lwPhotos} />
-      case "happy_hour": return <HappyHourScreen cocktails={menu.hhCocktails} bieres={menu.hhBieres} vins={menu.hhVins} tapasSignature={menu.hhTapasSignature} spiritueux={menu.hhSpiritueux} messageBas={menu.hhMessageBas} />
+      case "happy_hour":
+        return showHappyHourPhotos && menu.happyHourPhotos.length > 0
+          ? <HappyHourPhotoScreen photos={menu.happyHourPhotos} />
+          : <HappyHourScreen cocktails={menu.hhCocktails} bieres={menu.hhBieres} vins={menu.hhVins} tapasSignature={menu.hhTapasSignature} spiritueux={menu.hhSpiritueux} messageBas={menu.hhMessageBas} />
       case "apero":      return <HappyHourScreen cocktails={menu.aperoCocktails} bieres={menu.aperoBieres} vins={menu.aperoVins} tapasSignature={menu.aperoTapasSignature} spiritueux={menu.aperoSpiritueux} messageBas={menu.aperoMessageBas} titre="Apéro" wineOnly photos={menu.aperoPhotos} />
       case "closed":
       default:           return <ClosedScreen />

@@ -35,6 +35,7 @@ export interface MenuData {
   lwPhotos:           Photo[]
   aperoPhotos:        Photo[]
   lunchPhotos:        Photo[]
+  happyHourPhotos:    Photo[]
   loading:            boolean
 }
 
@@ -50,6 +51,7 @@ const EMPTY: MenuData = {
   lwPhotos: [],
   aperoPhotos: [],
   lunchPhotos: [],
+  happyHourPhotos: [],
   loading: true,
 }
 
@@ -107,6 +109,9 @@ export function useMenuData(): MenuData {
         id: r.id, url: r.url, sortOrder: r.sort_order,
       })),
       lunchPhotos: (photoRows ?? []).filter((r: any) => r.page === "lunch_photo").map((r: any) => ({
+        id: r.id, url: r.url, sortOrder: r.sort_order,
+      })),
+      happyHourPhotos: (photoRows ?? []).filter((r: any) => r.page === "happy_hour_photo").map((r: any) => ({
         id: r.id, url: r.url, sortOrder: r.sort_order,
       })),
       loading:           false,

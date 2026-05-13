@@ -15,8 +15,9 @@ const PAGES = [
   { id: 'breakfast',     label: 'Breakfast' },
   { id: 'lunch',         label: 'Lunch' },
   { id: 'lunch_weekend', label: 'Lunch (week-end)' },
-  { id: 'lunch_photo',   label: 'Lunch Photo' },
-  { id: 'happy_hour',    label: 'Happy Hour' },
+  { id: 'lunch_photo',       label: 'Lunch Photo' },
+  { id: 'happy_hour',        label: 'Happy Hour' },
+  { id: 'happy_hour_photo',  label: 'Happy Hour Photo' },
   { id: 'apero',         label: 'Apéro (week-end)' },
 ];
 
@@ -575,8 +576,8 @@ export default function WebFrontDashboard() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <p style={{ color: BRUME, fontSize: '0.72rem', fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Action ?</p>
               {ACTIONS.filter(a => {
-                if (a.id === 'photos') return ['lunch_weekend', 'apero', 'lunch_photo'].includes(wizardPage);
-                if (wizardPage === 'lunch_photo') return false;
+                if (a.id === 'photos') return ['lunch_weekend', 'apero', 'lunch_photo', 'happy_hour_photo'].includes(wizardPage);
+                if (wizardPage === 'lunch_photo' || wizardPage === 'happy_hour_photo') return false;
                 if (wizardPage === 'lunch') return a.id === 'modifier' || a.id === 'ajouter' || a.id === 'supprimer';
                 return a.id !== 'photos';
               }).map(a => (
