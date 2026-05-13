@@ -230,6 +230,22 @@ export default function WebFrontDashboard() {
     setPhotos(data ?? []);
   };
 
+  const compressImage = (file, maxPx = 1920, quality = 0.82) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width  = Math.round(img.width  * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(resolve, 'image/jpeg', quality);
+      };
+      img.src = url;
+    });
+
   const handlePhotoUpload = async (e) => {
     const files = Array.from(e.target.files ?? []);
     if (!files.length || !venueId) return;
@@ -238,10 +254,10 @@ export default function WebFrontDashboard() {
     let baseOrder = photos.filter(p => p.active).length + 1;
     let errors = 0;
     for (const file of files) {
-      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-      const path = `${wizardPage}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: uploadError } = await supabase.storage.from('photos').upload(path, file, {
-        contentType: file.type || 'image/jpeg',
+      const compressed = await compressImage(file);
+      const path = `${wizardPage}_${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`;
+      const { error: uploadError } = await supabase.storage.from('photos').upload(path, compressed, {
+        contentType: 'image/jpeg',
         upsert: false,
       });
       if (uploadError) { errors++; continue; }
