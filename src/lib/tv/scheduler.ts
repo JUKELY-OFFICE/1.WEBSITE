@@ -13,12 +13,13 @@ function nowInMinutes(): number {
 
 export function getCurrentMode(): ScreenMode {
   const now     = nowInMinutes()
-  const day     = new Date().getDay() // 0=dim, 6=sam
-  const weekend = day === 0 || day === 6
+  const day        = new Date().getDay() // 0=dim, 6=sam
+  const lunchWE    = day === 0 || day === 6
+  const apero      = day === 0
   const { breakfast, lunch, happyHour } = tvTheme.schedule
 
   if (now >= timeToMinutes(breakfast.start) && now < timeToMinutes(breakfast.end)) return "breakfast"
-  if (now >= timeToMinutes(lunch.start)     && now < timeToMinutes(lunch.end))     return "lunch"
-  if (now >= timeToMinutes(happyHour.start) && now < timeToMinutes(happyHour.end)) return weekend ? "apero" : "happy_hour"
+  if (now >= timeToMinutes(lunch.start)     && now < timeToMinutes(lunch.end))     return lunchWE ? "lunch_weekend" : "lunch"
+  if (now >= timeToMinutes(happyHour.start) && now < timeToMinutes(happyHour.end)) return apero   ? "apero"         : "happy_hour"
   return "closed"
 }

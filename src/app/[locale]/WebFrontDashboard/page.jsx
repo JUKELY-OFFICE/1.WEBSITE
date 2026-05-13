@@ -226,7 +226,7 @@ export default function WebFrontDashboard() {
 
   const fetchPhotos = async (page) => {
     const { data } = await supabase.from('wf_photos').select('*')
-      .eq('venue_id', venueId).eq('page', page).eq('active', true).order('sort_order');
+      .eq('venue_id', venueId).eq('page', page).order('sort_order');
     setPhotos(data ?? []);
   };
 
@@ -244,7 +244,8 @@ export default function WebFrontDashboard() {
     if (uploadError) { setStatus({ ok: false, text: `Erreur upload : ${uploadError.message}` }); setPhotoUploading(false); return; }
     const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path);
     const { error: insertError } = await supabase.from('wf_photos').insert({
-      venue_id: venueId, page: wizardPage, url: publicUrl, sort_order: photos.length + 1,
+      venue_id: venueId, page: wizardPage, url: publicUrl,
+      active: true, sort_order: photos.filter(p => p.active).length + 1,
     });
     if (insertError) setStatus({ ok: false, text: `Erreur : ${insertError.message}` });
     else { setStatus({ ok: true, text: 'Photo ajoutée.' }); fetchPhotos(wizardPage); refreshPreview(); }
@@ -252,19 +253,27 @@ export default function WebFrontDashboard() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handlePhotoDelete = async (photo) => {
-    const { error } = await supabase.from('wf_photos').delete().eq('id', photo.id);
+  const handlePhotoDeactivate = async (photo) => {
+    const { error } = await supabase.from('wf_photos').update({ active: false, sort_order: null }).eq('id', photo.id);
     if (error) setStatus({ ok: false, text: `Erreur : ${error.message}` });
-    else { setStatus({ ok: true, text: 'Photo supprimée.' }); fetchPhotos(wizardPage); refreshPreview(); }
+    else { setStatus({ ok: true, text: 'Photo retirée du carousel.' }); fetchPhotos(wizardPage); refreshPreview(); }
+  };
+
+  const handlePhotoActivate = async (photo) => {
+    const nextSortOrder = photos.filter(p => p.active).length + 1;
+    const { error } = await supabase.from('wf_photos').update({ active: true, sort_order: nextSortOrder }).eq('id', photo.id);
+    if (error) setStatus({ ok: false, text: `Erreur : ${error.message}` });
+    else { setStatus({ ok: true, text: 'Photo ajoutée au carousel.' }); fetchPhotos(wizardPage); refreshPreview(); }
   };
 
   const handlePhotoReorder = async (idx, direction) => {
+    const activePhotos = photos.filter(p => p.active).sort((a, b) => a.sort_order - b.sort_order);
     const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
-    if (swapIdx < 0 || swapIdx >= photos.length) return;
-    const next = [...photos];
+    if (swapIdx < 0 || swapIdx >= activePhotos.length) return;
+    const next = [...activePhotos];
     [next[idx], next[swapIdx]] = [next[swapIdx], next[idx]];
-    setPhotos(next);
     await Promise.all(next.map((p, i) => supabase.from('wf_photos').update({ sort_order: i + 1 }).eq('id', p.id)));
+    fetchPhotos(wizardPage);
     refreshPreview();
   };
 
@@ -664,27 +673,19 @@ export default function WebFrontDashboard() {
           {/* Étape photos */}
           {wizardAction === 'photos' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+
+              {/* Section 1 — Carousel actif */}
               <p style={{ color: BRUME, fontSize: '0.72rem', fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Photos du carousel ({photos.length})
+                Carousel actif ({photos.filter(p => p.active).length})
               </p>
 
-              {/* Upload */}
-              <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload}
-                style={{ display: 'none' }} />
-              <button onClick={() => fileInputRef.current?.click()} disabled={photoUploading}
-                style={{ padding: '0.6rem', borderRadius: '8px', border: `1px dashed ${MOUTARDE}`,
-                  color: MOUTARDE, background: 'rgba(244,197,66,0.06)', fontSize: '0.875rem',
-                  cursor: photoUploading ? 'wait' : 'pointer', fontFamily: 'var(--font-display)',
-                  opacity: photoUploading ? 0.6 : 1 }}>
-                {photoUploading ? 'Upload en cours…' : '+ Ajouter une photo'}
-              </button>
-
-              {/* Liste des photos */}
-              {photos.length === 0 ? (
-                <p style={{ color: BRUME, fontSize: '0.8rem', fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>Aucune photo.</p>
+              {photos.filter(p => p.active).length === 0 ? (
+                <p style={{ color: BRUME, fontSize: '0.8rem', fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
+                  Aucune photo active.
+                </p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {photos.map((photo, idx) => (
+                  {photos.filter(p => p.active).sort((a, b) => a.sort_order - b.sort_order).map((photo, idx, arr) => (
                     <div key={photo.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem',
                       padding: '0.5rem', borderRadius: '8px', border: `1px solid ${BORDER}`,
                       background: 'rgba(15,39,72,0.4)' }}>
@@ -700,17 +701,69 @@ export default function WebFrontDashboard() {
                         <button onClick={() => handlePhotoReorder(idx, 'up')} disabled={idx === 0}
                           style={{ background: 'none', border: 'none', color: idx === 0 ? 'rgba(148,165,188,0.3)' : BRUME,
                             cursor: idx === 0 ? 'default' : 'pointer', fontSize: '0.7rem', lineHeight: 1 }}>▲</button>
-                        <button onClick={() => handlePhotoReorder(idx, 'down')} disabled={idx === photos.length - 1}
-                          style={{ background: 'none', border: 'none', color: idx === photos.length - 1 ? 'rgba(148,165,188,0.3)' : BRUME,
-                            cursor: idx === photos.length - 1 ? 'default' : 'pointer', fontSize: '0.7rem', lineHeight: 1 }}>▼</button>
+                        <button onClick={() => handlePhotoReorder(idx, 'down')} disabled={idx === arr.length - 1}
+                          style={{ background: 'none', border: 'none', color: idx === arr.length - 1 ? 'rgba(148,165,188,0.3)' : BRUME,
+                            cursor: idx === arr.length - 1 ? 'default' : 'pointer', fontSize: '0.7rem', lineHeight: 1 }}>▼</button>
                       </div>
-                      <button onClick={() => handlePhotoDelete(photo)}
+                      <button onClick={() => handlePhotoDeactivate(photo)}
                         style={{ background: 'none', border: 'none', color: BRIQUE, cursor: 'pointer', fontSize: '1rem', lineHeight: 1, padding: '0 0.25rem' }}>
                         ×
                       </button>
                     </div>
                   ))}
                 </div>
+              )}
+
+              {/* Séparateur */}
+              <div style={{ borderTop: `1px solid ${BORDER}`, margin: '0.25rem 0' }} />
+
+              {/* Section 2 — Bibliothèque */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <p style={{ color: BRUME, fontSize: '0.72rem', fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  Bibliothèque ({photos.length})
+                </p>
+                <div>
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+                  <button onClick={() => fileInputRef.current?.click()} disabled={photoUploading}
+                    style={{ padding: '0.3rem 0.7rem', borderRadius: '20px', border: 'none', background: NUIT,
+                      color: CRAIE, fontSize: '0.75rem', cursor: photoUploading ? 'wait' : 'pointer',
+                      fontFamily: 'var(--font-display)', opacity: photoUploading ? 0.6 : 1 }}>
+                    {photoUploading ? '…' : '+ Uploader'}
+                  </button>
+                </div>
+              </div>
+
+              {photos.length === 0 ? (
+                <p style={{ color: BRUME, fontSize: '0.8rem', fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
+                  Aucune photo. Uploadez-en une.
+                </p>
+              ) : (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
+                    {photos.map(photo => (
+                      <div key={photo.id}
+                        style={{ position: 'relative', opacity: photo.active ? 0.35 : 1, cursor: photo.active ? 'default' : 'pointer' }}
+                        onClick={() => !photo.active && handlePhotoActivate(photo)}
+                        title={photo.active ? 'Déjà dans le carousel' : 'Cliquer pour ajouter au carousel'}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={photo.url} alt="" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover',
+                          borderRadius: '6px', border: `2px solid ${photo.active ? '#22c55e' : 'transparent'}`, display: 'block' }} />
+                        {photo.active ? (
+                          <div style={{ position: 'absolute', top: '3px', right: '3px', background: '#22c55e', borderRadius: '50%',
+                            width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '9px', color: 'white' }}>✓</div>
+                        ) : (
+                          <div style={{ position: 'absolute', bottom: '3px', right: '3px', background: NUIT, borderRadius: '50%',
+                            width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '12px', color: CRAIE }}>+</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ color: BRUME, fontSize: '0.68rem', fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
+                    ✓ = dans le carousel · cliquer une photo pour l'ajouter
+                  </p>
+                </>
               )}
 
               <button type="button" onClick={resetWizard}
