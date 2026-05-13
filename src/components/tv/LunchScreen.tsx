@@ -271,7 +271,7 @@ export default function LunchScreen({ entree, plat, dessert, vins, showDice = tr
 
           {!showDice && photos.length > 0 && <>
             <div style={{ width: "1px", background: CHALK_LINE, alignSelf: "stretch" }} />
-            <div style={{ width: "55%", paddingBottom: "0.4vh", display: "flex", flexDirection: "column" }}>
+            <div style={{ width: "45%", paddingBottom: "0.4vh", display: "flex", flexDirection: "column" }}>
               <PhotoCarousel photos={photos} />
             </div>
           </>}
