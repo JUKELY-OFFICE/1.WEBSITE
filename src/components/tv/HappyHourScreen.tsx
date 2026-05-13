@@ -184,7 +184,7 @@ export default function HappyHourScreen({ cocktails, bieres, vins, tapasSignatur
           {/* Colonne droite : carousel photos */}
           {photos.length > 0 && <>
             <div style={{ width: "1px", background: "rgba(242,237,228,0.22)", alignSelf: "stretch" }} />
-            <div style={{ width: "55%", display: "flex", flexDirection: "column", paddingTop: "4vh" }}>
+            <div style={{ width: "38%", display: "flex", flexDirection: "column", paddingTop: "4vh" }}>
               <PhotoCarousel photos={photos} />
             </div>
           </>}
