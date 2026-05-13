@@ -266,6 +266,14 @@ export default function WebFrontDashboard() {
     else { setStatus({ ok: true, text: 'Photo retirée du carousel.' }); fetchPhotos(wizardPage); refreshPreview(); }
   };
 
+  const handlePhotoDeletePermanent = async (photo) => {
+    const storagePath = photo.url.split('/photos/')[1];
+    if (storagePath) await supabase.storage.from('photos').remove([storagePath]);
+    const { error } = await supabase.from('wf_photos').delete().eq('id', photo.id);
+    if (error) setStatus({ ok: false, text: `Erreur : ${error.message}` });
+    else { setStatus({ ok: true, text: 'Photo supprimée.' }); fetchPhotos(wizardPage); refreshPreview(); }
+  };
+
   const handlePhotoActivate = async (photo) => {
     const nextSortOrder = photos.filter(p => p.active).length + 1;
     const { error } = await supabase.from('wf_photos').update({ active: true, sort_order: nextSortOrder }).eq('id', photo.id);
@@ -764,6 +772,14 @@ export default function WebFrontDashboard() {
                             width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: '12px', color: CRAIE }}>+</div>
                         )}
+                        <button
+                          onClick={e => { e.stopPropagation(); handlePhotoDeletePermanent(photo); }}
+                          title="Supprimer définitivement"
+                          style={{ position: 'absolute', top: '3px', left: '3px', background: BRIQUE, border: 'none',
+                            borderRadius: '50%', width: '16px', height: '16px', display: 'flex', alignItems: 'center',
+                            justifyContent: 'center', fontSize: '9px', color: 'white', cursor: 'pointer', opacity: 0.85 }}>
+                          ×
+                        </button>
                       </div>
                     ))}
                   </div>
