@@ -20,6 +20,11 @@ export default function TVDisplay() {
   const menu = useMenuData()
   const [showLunchPhotos, setShowLunchPhotos] = useState(false)
 
+  const previewParam = searchParams.get("preview")
+  const mode = (previewParam && VALID_MODES.includes(previewParam))
+    ? previewParam
+    : scheduled
+
   useEffect(() => {
     if (mode !== 'lunch' || menu.lunchPhotos.length === 0) {
       setShowLunchPhotos(false)
@@ -38,11 +43,6 @@ export default function TVDisplay() {
     startCycle()
     return () => clearTimeout(timeout)
   }, [mode, menu.lunchPhotos.length])
-
-  const previewParam = searchParams.get("preview")
-  const mode = (previewParam && VALID_MODES.includes(previewParam))
-    ? previewParam
-    : scheduled
 
   useEffect(() => {
     const style = document.createElement("style")
