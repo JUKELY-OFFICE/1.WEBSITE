@@ -277,7 +277,7 @@ export default function WebFrontDashboard() {
   };
 
   const handlePhotoDeactivate = async (photo) => {
-    const { error } = await supabase.from('wf_photos').update({ active: false, sort_order: null }).eq('id', photo.id);
+    const { error } = await supabase.from('wf_photos').update({ active: false }).eq('id', photo.id);
     if (error) setStatus({ ok: false, text: `Erreur : ${error.message}` });
     else { setStatus({ ok: true, text: 'Photo retirée du carousel.' }); fetchPhotos(wizardPage); refreshPreview(); }
   };
