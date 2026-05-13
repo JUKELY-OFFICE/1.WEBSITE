@@ -231,24 +231,31 @@ export default function WebFrontDashboard() {
   };
 
   const handlePhotoUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file || !venueId) return;
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length || !venueId) return;
     setPhotoUploading(true);
     setStatus(null);
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const path = `${wizardPage}_${Date.now()}.${ext}`;
-    const { error: uploadError } = await supabase.storage.from('photos').upload(path, file, {
-      contentType: file.type || 'image/jpeg',
-      upsert: false,
-    });
-    if (uploadError) { setStatus({ ok: false, text: `Erreur upload : ${uploadError.message}` }); setPhotoUploading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path);
-    const { error: insertError } = await supabase.from('wf_photos').insert({
-      venue_id: venueId, page: wizardPage, url: publicUrl,
-      active: true, sort_order: photos.filter(p => p.active).length + 1,
-    });
-    if (insertError) setStatus({ ok: false, text: `Erreur : ${insertError.message}` });
-    else { setStatus({ ok: true, text: 'Photo ajoutée.' }); fetchPhotos(wizardPage); refreshPreview(); }
+    let baseOrder = photos.filter(p => p.active).length + 1;
+    let errors = 0;
+    for (const file of files) {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const path = `${wizardPage}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadError } = await supabase.storage.from('photos').upload(path, file, {
+        contentType: file.type || 'image/jpeg',
+        upsert: false,
+      });
+      if (uploadError) { errors++; continue; }
+      const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path);
+      const { error: insertError } = await supabase.from('wf_photos').insert({
+        venue_id: venueId, page: wizardPage, url: publicUrl,
+        active: true, sort_order: baseOrder++,
+      });
+      if (insertError) errors++;
+    }
+    if (errors) setStatus({ ok: false, text: `${errors} photo(s) n'ont pas pu être uploadées.` });
+    else setStatus({ ok: true, text: `${files.length} photo(s) ajoutée(s).` });
+    fetchPhotos(wizardPage);
+    refreshPreview();
     setPhotoUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -723,7 +730,7 @@ export default function WebFrontDashboard() {
                   Bibliothèque ({photos.length})
                 </p>
                 <div>
-                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+                  <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoUpload} style={{ display: 'none' }} />
                   <button onClick={() => fileInputRef.current?.click()} disabled={photoUploading}
                     style={{ padding: '0.3rem 0.7rem', borderRadius: '20px', border: 'none', background: NUIT,
                       color: CRAIE, fontSize: '0.75rem', cursor: photoUploading ? 'wait' : 'pointer',
